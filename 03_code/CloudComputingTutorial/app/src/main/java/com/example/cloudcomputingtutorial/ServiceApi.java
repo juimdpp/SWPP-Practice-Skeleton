@@ -7,4 +7,7 @@ import retrofit2.http.POST;
 public interface ServiceApi {
     @POST("/user/write")
     Call<CodeMessageResponse> userWrite(@Body NameIdData data);
+
+    @POST("/user/read")
+    Call<CodeMessageIdResponse> userRead(@Body NameData data);
 }

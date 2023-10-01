@@ -3,6 +3,7 @@ package com.example.cloudcomputingtutorial;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -63,6 +64,32 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<CodeMessageResponse> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "Write Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        readButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userName = targetNameInput.getText().toString();
+
+                Log.d("Hyunsoo", userName);
+
+                NameData requestData = new NameData(userName);
+
+                service.userRead(requestData).enqueue(new Callback<CodeMessageIdResponse>() {
+                    @Override
+                    public void onResponse(Call<CodeMessageIdResponse> call, Response<CodeMessageIdResponse> response) {
+                        CodeMessageIdResponse result = response.body();
+                        idText.setText(result.getUserId());
+                        targetNameOutput.setText(userName);
+                        Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<CodeMessageIdResponse> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Write Error", Toast.LENGTH_SHORT).show();
                     }
                 });
