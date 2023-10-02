@@ -22,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
         // Repository
         NumRollRepository numRollRepository = new NumRollRepository(numRollDataSource);
 
+        // Utils
+        RollDiceUtils rollDiceUtils = new RollDiceUtils();
         // Use Case
-        RollDiceUseCase rollDiceUseCase = new RollDiceUseCase(numRollRepository);
+        RollDiceUseCase rollDiceUseCase = new RollDiceUseCase(numRollRepository, rollDiceUtils);
 
         // View Model
         DiceRollViewModel diceRollViewModel = new ViewModelProvider(this).get(DiceRollViewModel.class);
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 (TextView) findViewById(R.id.firstDiceTextView),
                 (TextView) findViewById(R.id.secondDiceTextView),
                 (TextView) findViewById(R.id.numRolledTextView),
+                (TextView) findViewById(R.id.primeNumbersTextView),
                 (Button) findViewById(R.id.rollButton));
         Button resetButton = (Button) findViewById(R.id.resetButton);
 

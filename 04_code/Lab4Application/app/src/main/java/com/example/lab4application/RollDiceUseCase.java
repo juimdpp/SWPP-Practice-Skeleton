@@ -4,16 +4,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RollDiceUseCase {
     private final NumRollRepository numRollRepository;
+    private final RollDiceUtils rollDiceUtils;
     private int firstDieValue = -1;
     private int secondDieValue = -1;
+    private String primeNumbersSmallerThanProduct = "";
 
-    public RollDiceUseCase(NumRollRepository numRollRepository) {
+    public RollDiceUseCase(NumRollRepository numRollRepository, RollDiceUtils rollDiceUtils) {
         this.numRollRepository = numRollRepository;
+        this.rollDiceUtils = rollDiceUtils;
     }
 
     public void rollDice() {
-        firstDieValue = ThreadLocalRandom.current().nextInt(0, 6) + 1;
-        secondDieValue = ThreadLocalRandom.current().nextInt(0, 6) + 1;
+        firstDieValue = rollDiceUtils.getRandomDiceNumber();
+        secondDieValue = rollDiceUtils.getRandomDiceNumber();
+        primeNumbersSmallerThanProduct = rollDiceUtils.findPrimeNumbers(firstDieValue, secondDieValue);
         notifyRoll();
     }
     private void notifyRoll() {
@@ -27,4 +31,5 @@ public class RollDiceUseCase {
     public int getFirstDieValue() {return firstDieValue;}
     public int getSecondDieValue() {return secondDieValue;}
     public int getNumRoll() {return numRollRepository.getNumRoll();}
+    public String getPrimeNumbers() {return primeNumbersSmallerThanProduct;}
 }

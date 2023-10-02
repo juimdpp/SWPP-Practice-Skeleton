@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class DiceRollViewModel extends ViewModel {
     private final MutableLiveData<DiceRollUiState> uiState =
-            new MutableLiveData(new DiceRollUiState(-1, -1, -1));
+            new MutableLiveData(new DiceRollUiState(-1, -1, -1, ""));
 
     public LiveData<DiceRollUiState> getUiState() {
         return uiState;
@@ -14,7 +14,7 @@ public class DiceRollViewModel extends ViewModel {
 
     public void setNumRoll(RollDiceUseCase rollDiceUseCase) {
         uiState.setValue(
-                new DiceRollUiState(-1, -1, rollDiceUseCase.getNumRoll())
+                new DiceRollUiState(-1, -1, rollDiceUseCase.getNumRoll(), rollDiceUseCase.getPrimeNumbers())
         );
     }
 
@@ -23,7 +23,8 @@ public class DiceRollViewModel extends ViewModel {
                 new DiceRollUiState(
                         rollDiceUseCase.getFirstDieValue(),
                         rollDiceUseCase.getSecondDieValue(),
-                        rollDiceUseCase.getNumRoll()
+                        rollDiceUseCase.getNumRoll(),
+                        rollDiceUseCase.getPrimeNumbers()
                 )
         );
     }
